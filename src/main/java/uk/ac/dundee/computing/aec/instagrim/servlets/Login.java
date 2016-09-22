@@ -50,7 +50,6 @@ public class Login extends HttpServlet {
         
         String username=request.getParameter("username");
         String password=request.getParameter("password");
-        
         User us=new User();
         us.setCluster(cluster);
         boolean isValid=us.IsValidUser(username, password);
@@ -68,11 +67,15 @@ public class Login extends HttpServlet {
 	    rd.forward(request,response);
             
         }else{
+            session.setAttribute("InvalidLogin", "Invalid Username or Password");
             response.sendRedirect("/Instagrim/login.jsp");
         }
         
     }
-
+    
+    
+    
+    
     /**
      * Returns a short description of the servlet.
      *

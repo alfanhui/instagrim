@@ -27,6 +27,7 @@
        
         <article>
             <h3>Login</h3>
+            ${InvalidLogin}
             <form method="POST"  action="Login">
                 <ul>
                     <li>User Name <input type="text" name="username"></li>
@@ -35,7 +36,9 @@
                 <br/>
                 <input type="submit" value="Login"> 
             </form>
-
+            <%
+                session.setAttribute("InvalidLogin", null);
+            %>
         </article>
         <footer>
             <ul>
