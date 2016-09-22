@@ -19,6 +19,7 @@
             <h1>InstaGrim ! </h1>
             <h2>Your world in Black and White</h2>
         </header>
+        <p> A Error has occurred! </p>
         <nav>
             <ul>
 
@@ -33,11 +34,6 @@
                     %>
 
                 <li><a href="/Instagrim/Images/<%=lg.getUsername()%>">Your Images</a></li>
-                <form method="POST"  action="Logout">
-                <ul>
-                </ul>
-                <input type="submit" value="Logout"> 
-            </form>
                     <%}
                             }else{
                                 %>
