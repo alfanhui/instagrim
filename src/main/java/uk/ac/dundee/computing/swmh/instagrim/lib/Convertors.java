@@ -1,4 +1,4 @@
-package uk.ac.dundee.computing.aec.instagrim.lib;
+package uk.ac.dundee.computing.swmh.instagrim.lib;
 
 import java.net.URLDecoder;
 import java.util.StringTokenizer;
