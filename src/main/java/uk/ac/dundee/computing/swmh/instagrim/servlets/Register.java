@@ -63,7 +63,7 @@ public class Register extends HttpServlet {
             session.setAttribute("UsernameCheck", "Username already used!");
             response.sendRedirect("/Instagrim/register.jsp");
         }else{
-        us.RegisterUser(username, password);
+        us.RegisterUser(username, password, email);
         LoggedIn lg= new LoggedIn();
         lg.setLogedin();
         lg.setUsername(username);            

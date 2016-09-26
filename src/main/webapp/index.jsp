@@ -21,17 +21,16 @@
         </header>
         <nav>
             <ul>
-
-               
-                <li><a href="upload.jsp">Upload</a></li>
                     <%
                         
                         LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
                         if (lg != null) {
                             String UserName = lg.getUsername();
                             if (lg.getlogedin()) {
+                                
                     %>
-
+                <h3><%=lg.getUsername()%></h3>
+                <li><a href="upload.jsp">Upload</a></li>
                 <li><a href="/Instagrim/Images/<%=lg.getUsername()%>">Your Images</a></li>
                 <form method="POST"  action="Logout">
                 <ul>
@@ -52,7 +51,7 @@
         <footer>
             <ul>
                 <li class="footer"><a href="/Instagrim">Home</a></li>
-                <li>&COPY; Andy C</li>
+                <li>&COPY; SWMH</li>
             </ul>
         </footer>
     </body>

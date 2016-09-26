@@ -27,22 +27,22 @@ public class User {
         
     }
     
-    public boolean RegisterUser(String username, String Password){
+    public boolean RegisterUser(String username, String password, String email){
         AeSimpleSHA1 sha1handler=  new AeSimpleSHA1();
         String EncodedPassword=null;
         try {
-            EncodedPassword= sha1handler.SHA1(Password);
+            EncodedPassword= sha1handler.SHA1(password);
         }catch (UnsupportedEncodingException | NoSuchAlgorithmException et){
             System.out.println("Can't check your password");
             return false;
         }
         Session session = cluster.connect("instagrim");
-        PreparedStatement ps = session.prepare("insert into userprofiles (login,password) Values(?,?)");
+        PreparedStatement ps = session.prepare("insert into userprofiles (login,password,email) Values(?,?,?)");
        
         BoundStatement boundStatement = new BoundStatement(ps);
         session.execute( // this is where the query is executed
                 boundStatement.bind( // here you are binding the 'boundStatement'
-                        username,EncodedPassword));
+                        username,EncodedPassword,email));
         //We are assuming this always works.  Also a transaction would be good here !
         
         return true;
@@ -85,7 +85,7 @@ public class User {
 
     public boolean IsValidUsername(String username){
         Session session = cluster.connect("instagrim");
-        PreparedStatement ps = session.prepare("select password from userprofiles where login =?");
+        PreparedStatement ps = session.prepare("select login from userprofiles where login =?");
         ResultSet rs = null;
         BoundStatement boundStatement = new BoundStatement(ps);
         rs = session.execute( // this is where the query is executed
@@ -97,4 +97,26 @@ public class User {
         } else return false;
     }
     
+    public String getEmail(String username){
+        Session session = cluster.connect("instagrim");
+        PreparedStatement ps = session.prepare("select email from userprofiles where login =?");
+        ResultSet rs = null;
+        BoundStatement boundStatement = new BoundStatement(ps);
+        rs = session.execute( // this is where the query is executed
+                boundStatement.bind( // here you are binding the 'boundStatement'
+                        username));
+        if (rs.isExhausted()) {
+            System.out.println("No email for User");
+            return null;
+        } else{
+            String storedEmail = null;
+            for (Row row : rs){
+                storedEmail = row.getString("email");
+               
+            }
+            return storedEmail;
+            
+        }
+    }
 }
+
