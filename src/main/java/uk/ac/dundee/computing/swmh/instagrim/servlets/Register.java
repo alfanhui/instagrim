@@ -16,8 +16,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import uk.ac.dundee.computing.swmh.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.swmh.instagrim.models.User;
+import uk.ac.dundee.computing.swmh.instagrim.stores.LoggedIn;
 
 /**
  *
@@ -45,18 +47,29 @@ public class Register extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session=request.getSession();
+        User us=new User();
+        us.setCluster(cluster);
+        
         String username=request.getParameter("username");
         String password=request.getParameter("password");
         String passwordCheck=request.getParameter("passwordCheck");
-        if (password != passwordCheck){
+        String email=request.getParameter("email");
+        if(!password.equals(passwordCheck)){
             //Password Check failed
-        }
-        User us=new User();
-        us.setCluster(cluster);
+            session.setAttribute("PasswordCheck", "Passwords do not match!");
+            response.sendRedirect("/Instagrim/register.jsp");
+        }else if(!us.IsValidUsername(username)){
+            session.setAttribute("UsernameCheck", "Username already used!");
+            response.sendRedirect("/Instagrim/register.jsp");
+        }else{
         us.RegisterUser(username, password);
-        
+        LoggedIn lg= new LoggedIn();
+        lg.setLogedin();
+        lg.setUsername(username);            
+        session.setAttribute("LoggedIn", lg);
 	response.sendRedirect("/Instagrim");
-        
+        }
     }
 
     /**

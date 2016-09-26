@@ -83,5 +83,18 @@ public class User {
         this.cluster = cluster;
     }
 
+    public boolean IsValidUsername(String username){
+        Session session = cluster.connect("instagrim");
+        PreparedStatement ps = session.prepare("select password from userprofiles where login =?");
+        ResultSet rs = null;
+        BoundStatement boundStatement = new BoundStatement(ps);
+        rs = session.execute( // this is where the query is executed
+                boundStatement.bind( // here you are binding the 'boundStatement'
+                        username));
+        if (rs.isExhausted()) {
+            System.out.println("Username free");
+            return true;
+        } else return false;
+    }
     
 }
