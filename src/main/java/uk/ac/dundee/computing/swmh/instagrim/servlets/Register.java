@@ -26,11 +26,12 @@ import uk.ac.dundee.computing.swmh.instagrim.models.User;
 @WebServlet(name = "Register", urlPatterns = {"/Register"})
 public class Register extends HttpServlet {
     Cluster cluster=null;
-    
-    public void init(ServletConfig config){ //throws ServletException {
+    public void init(ServletConfig config) throws ServletException {
         // TODO Auto-generated method stub
         cluster = CassandraHosts.getCluster();
     }
+
+
 
 
     /**

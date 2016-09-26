@@ -34,7 +34,3 @@ Some ideas for added functionality you might like to add (not all are simple, yo
 
 This is not a limit to what you could do, use your imagination !
 
-Features added:
-    Ability to Logout
-    Catching successfully invalid Username/Password login 
-    

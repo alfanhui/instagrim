@@ -6,7 +6,7 @@
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="uk.ac.dundee.computing.aec.instagrim.stores.*" %>
+<%@page import="uk.ac.dundee.computing.swmh.instagrim.stores.*" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,16 +21,21 @@
         </header>
         <nav>
             <ul>
+
+               
+                <li><a href="upload.jsp">Upload</a></li>
                     <%
+                        
                         LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
                         if (lg != null) {
                             String UserName = lg.getUsername();
                             if (lg.getlogedin()) {
                     %>
-                    <h3><%=lg.getUsername()%></h3>
-                <li><a href="upload.jsp">Upload</a></li>
+
                 <li><a href="/Instagrim/Images/<%=lg.getUsername()%>">Your Images</a></li>
                 <form method="POST"  action="Logout">
+                <ul>
+                </ul>
                 <input type="submit" value="Logout"> 
             </form>
                     <%}

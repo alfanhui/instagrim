@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>uk.ac.dundee.computing.aec</groupId>
+    <groupId>uk.ac.dundee.computing.swmh</groupId>
     <artifactId>Instagrim</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
@@ -13,7 +13,7 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    
+
     <dependencies>
         <dependency>
             <groupId>com.datastax.cassandra</groupId>
@@ -35,12 +35,6 @@
             <groupId>org.imgscalr</groupId>
             <artifactId>imgscalr-lib</artifactId>
             <version>4.2</version>
-        </dependency>
-        <dependency>
-            <groupId>uk.ac.dundee.computing.aec</groupId>
-            <artifactId>Instagrim</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <type>war</type>
         </dependency>
         <dependency>
             <groupId>javax</groupId>

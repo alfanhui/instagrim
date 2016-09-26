@@ -15,7 +15,8 @@
     </head>
     <body>
         <header>
-            <h1>InstaGrim ! <h2>Your world in Black and White</h2> </h1>
+        <h1>InstaGrim ! </h1>
+        <h2>Your world in Black and White</h2>
         </header>
         <nav>
             <ul>
@@ -26,7 +27,7 @@
        
         <article>
             <h3>Login</h3>
-            <font color = "red">${InvalidLogin}</font>
+            ${InvalidLogin}
             <form method="POST"  action="Login">
                 <ul>
                     <li>User Name <input type="text" name="username"></li>

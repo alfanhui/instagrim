@@ -50,6 +50,8 @@ public class Logout extends HttpServlet {
         if (lg != null) {
             lg.setLogedout();
             session.setAttribute("LoggedIn", null);
+            
+            //response.sendRedirect("/Instagrim");
             RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
 	    rd.forward(request,response);
         }else{
