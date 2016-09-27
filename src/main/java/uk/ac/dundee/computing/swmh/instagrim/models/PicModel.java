@@ -31,6 +31,7 @@ import java.nio.ByteBuffer;
 import java.util.Date;
 import java.util.LinkedList;
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpSession;
 import static org.imgscalr.Scalr.*;
 import org.imgscalr.Scalr.Method;
 import uk.ac.dundee.computing.swmh.instagrim.stores.Pic;
@@ -49,7 +50,7 @@ public class PicModel {
         this.cluster = cluster;
     }
 
-    public void insertPic(byte[] b, String type, String name, String user) {
+    public void insertPic(byte[] b, String type, String name, String user, boolean profilePicture) {
         try {
             Convertors convertor = new Convertors();
 
@@ -70,21 +71,29 @@ public class PicModel {
             ByteBuffer processedbuf=ByteBuffer.wrap(processedb);
             int processedlength=processedb.length;
             Session session = cluster.connect("instagrim");
-
-            PreparedStatement psInsertPic = session.prepare("insert into pics ( picid, image,thumb,processed, user, interaction_time,imagelength,thumblength,processedlength,type,name) values(?,?,?,?,?,?,?,?,?,?,?)");
-            PreparedStatement psInsertPicToUser = session.prepare("insert into userpiclist ( picid, user, pic_added) values(?,?,?)");
-            BoundStatement bsInsertPic = new BoundStatement(psInsertPic);
-            BoundStatement bsInsertPicToUser = new BoundStatement(psInsertPicToUser);
-
             Date DateAdded = new Date();
+            
+            PreparedStatement psInsertPic = session.prepare("insert into pics ( picid, image,thumb,processed, user, interaction_time,imagelength,thumblength,processedlength,type,name) values(?,?,?,?,?,?,?,?,?,?,?)");
+            if(!profilePicture){ //If profile picture, do not added it to user's pictures
+                PreparedStatement psInsertPicToUser = session.prepare("insert into userpiclist ( picid, user, pic_added) values(?,?,?)");
+                BoundStatement bsInsertPicToUser = new BoundStatement(psInsertPicToUser);
+                session.execute(bsInsertPicToUser.bind(picid, user, DateAdded));
+            }else{
+                PreparedStatement ps = session.prepare("update userprofiles set profile_picid =? where login =?");
+                BoundStatement boundStatement = new BoundStatement(ps);
+                session.execute( // this is where the query is executed
+                    boundStatement.bind( // here you are binding the 'boundStatement'
+                        user,picid));
+            }
+            BoundStatement bsInsertPic = new BoundStatement(psInsertPic);
             session.execute(bsInsertPic.bind(picid, buffer, thumbbuf,processedbuf, user, DateAdded, length,thumblength,processedlength, type, name));
-            session.execute(bsInsertPicToUser.bind(picid, user, DateAdded));
             session.close();
 
         } catch (IOException ex) {
             System.out.println("Error --> " + ex);
         }
     }
+    
 
     public byte[] picresize(String picid,String type) {
         try {

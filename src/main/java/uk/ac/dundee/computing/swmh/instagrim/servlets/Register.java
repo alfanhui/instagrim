@@ -8,6 +8,7 @@ package uk.ac.dundee.computing.swmh.instagrim.servlets;
 
 import com.datastax.driver.core.Cluster;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -17,7 +18,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import uk.ac.dundee.computing.swmh.instagrim.lib.CassandraHosts;
+import uk.ac.dundee.computing.swmh.instagrim.models.PicModel;
 import uk.ac.dundee.computing.swmh.instagrim.models.User;
 import uk.ac.dundee.computing.swmh.instagrim.stores.LoggedIn;
 
@@ -72,6 +75,7 @@ public class Register extends HttpServlet {
         }
     }
 
+    
     /**
      * Returns a short description of the servlet.
      *

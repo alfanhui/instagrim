@@ -6,7 +6,7 @@
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="uk.ac.dundee.computing.aec.instagrim.stores.*" %>
+<%@page import="uk.ac.dundee.computing.swmh.instagrim.stores.*" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,7 +19,16 @@
             <h1>InstaGrim ! </h1>
             <h2>Your world in Black and White</h2>
         </header>
-        <p> A Error has occurred! </p>
+    <body>
+        <p>Account Details</p>
+        
+        <form method="POST" enctype="multipart/form-data" action="Account">
+                Upload new profile Picture <input type="file" name="upfile"><br/>
+
+                <br/>
+                <input type="submit" value="Upload">
+        </form>
+    </body>
         <nav>
             <ul>
 
@@ -48,7 +57,6 @@
         <footer>
             <ul>
                 <li class="footer"><a href="/Instagrim">Home</a></li>
-                <li>&COPY; Andy C</li>
             </ul>
         </footer>
     </body>

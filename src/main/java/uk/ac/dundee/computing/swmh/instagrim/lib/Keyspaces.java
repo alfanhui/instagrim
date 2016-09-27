@@ -1,8 +1,5 @@
 package uk.ac.dundee.computing.swmh.instagrim.lib;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.datastax.driver.core.*;
 
 public final class Keyspaces {
@@ -43,11 +40,12 @@ public final class Keyspaces {
                     + "  );";
             String CreateUserProfile = "CREATE TABLE if not exists instagrim.userprofiles (\n"
                     + "      login text PRIMARY KEY,\n"
-                     + "     password text,\n"
+                    + "      password text,\n"
                     + "      first_name text,\n"
                     + "      last_name text,\n"
                     + "      email text,\n"
-                    + "      addresses  map<text, frozen <address>>\n"
+                    + "      addresses  map<text, frozen <address>>,\n"
+                    + "      profile_picid uuid\n"
                     + "  );";
             Session session = c.connect();
             try {

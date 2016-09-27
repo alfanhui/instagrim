@@ -107,12 +107,8 @@ public class Image extends HttpServlet {
     private void DisplayImage(int type,String Image, HttpServletResponse response) throws ServletException, IOException {
         PicModel tm = new PicModel();
         tm.setCluster(cluster);
-  
-        
         Pic p = tm.getPic(type,java.util.UUID.fromString(Image));
-        
         OutputStream out = response.getOutputStream();
-
         response.setContentType(p.getType());
         response.setContentLength(p.getLength());
         //out.write(Image);
@@ -124,7 +120,8 @@ public class Image extends HttpServlet {
         }
         out.close();
     }
-
+    
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         for (Part part : request.getParts()) {
             System.out.println("Part Name " + part.getName());
@@ -146,8 +143,7 @@ public class Image extends HttpServlet {
                 System.out.println("Length : " + b.length);
                 PicModel tm = new PicModel();
                 tm.setCluster(cluster);
-                tm.insertPic(b, type, filename, username);
-
+                tm.insertPic(b, type, filename, username, false);
                 is.close();
             }
             RequestDispatcher rd = request.getRequestDispatcher("/upload.jsp");

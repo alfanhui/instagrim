@@ -8,7 +8,6 @@ package uk.ac.dundee.computing.swmh.instagrim.servlets;
 
 import com.datastax.driver.core.Cluster;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -60,9 +59,7 @@ public class Login extends HttpServlet {
             lg.setLogedin();
             lg.setUsername(username);
             lg.setEmail(us.getEmail(username));
-            
-            //request.setAttribute("LoggedIn", lg);
-            
+            lg.setProfileUUID(us.getProfileUUID(username));
             session.setAttribute("LoggedIn", lg);
             System.out.println("Session in servlet "+session);
             RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
