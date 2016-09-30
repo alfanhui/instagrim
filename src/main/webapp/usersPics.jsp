@@ -17,14 +17,12 @@
     <body>
         <header>
         
-        <h1>InstaGrim ! </h1>
+        <h1>InstaGrim</h1>
         <h2>Your world in Black and White</h2>
         </header>
         
         <nav>
-            <ul>
-                <li class="nav"><a href="/Instagrim/upload.jsp">Upload</a></li>
-            </ul>
+        <jsp:include page="nav.jsp"></jsp:include>   
         </nav>
  
         <article>

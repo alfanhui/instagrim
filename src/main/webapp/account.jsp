@@ -14,45 +14,28 @@
         <link rel="stylesheet" type="text/css" href="Styles.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
+    <nav>
+        <jsp:include page="nav.jsp"></jsp:include>   
+        </nav>
     <body>
         <header>
-            <h1>InstaGrim ! </h1>
+            <h1>I n s t a G r i m</h1>
             <h2>Account Details</h2>
         </header>
     <body>        
         <form method="POST" enctype="multipart/form-data" action="Account">
-                Change Profile Picture <input type="file" name="upfile">
-                Change Password:
-                                <input type="password" name=""
+            <h3>Change Profile Picture</h3> <input type="file" name="upfile"> <p>
+                <br>
+            <h3>Change Password:</h3><p></p>
+                Old Password    <input type="password" name="oldPassword"><p></p>
+                New Password    <input type="password" name="newPassword"><p></p>
+                Confirm Password<input type="password" name="CheckPassword"></br>
+                
                 <input type="submit" value="Submit">
                 
         </form>
     </body>
-        <nav>
-            <ul>
-
-               
-                <li><a href="upload.jsp">Upload</a></li>
-                    <%
-                        
-                        LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
-                        if (lg != null) {
-                            String UserName = lg.getUsername();
-                            if (lg.getlogedin()) {
-                    %>
-
-                <li><a href="/Instagrim/Images/<%=lg.getUsername()%>">Your Images</a></li>
-                    <%}
-                            }else{
-                                %>
-                 <li><a href="register.jsp">Register</a></li>
-                <li><a href="login.jsp">Login</a></li>
-                <%
-                                        
-                            
-                    }%>
-            </ul>
-        </nav>
+        
         <footer>
             <ul>
                 <li class="footer"><a href="/Instagrim">Home</a></li>
