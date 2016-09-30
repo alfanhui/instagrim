@@ -18,10 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-import org.apache.commons.fileupload.FileItemIterator;
-import org.apache.commons.fileupload.FileItemStream;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.fileupload.util.Streams;
 import uk.ac.dundee.computing.swmh.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.swmh.instagrim.lib.Convertors;
 import uk.ac.dundee.computing.swmh.instagrim.models.PicModel;
@@ -69,6 +65,7 @@ public class Image extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
      * response)
      */
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
         String args[] = Convertors.SplitRequestPath(request);
@@ -98,12 +95,11 @@ public class Image extends HttpServlet {
         PicModel tm = new PicModel();
         tm.setCluster(cluster);
         java.util.LinkedList<Pic> lsPics = tm.getPicsForUser(User);
-        RequestDispatcher rd = request.getRequestDispatcher("/UsersPics.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/usersPics.jsp");
         request.setAttribute("Pics", lsPics);
         rd.forward(request, response);
 
     }
-
     private void DisplayImage(int type,String Image, HttpServletResponse response) throws ServletException, IOException {
         PicModel tm = new PicModel();
         tm.setCluster(cluster);

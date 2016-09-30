@@ -83,7 +83,7 @@ public class PicModel {
                 BoundStatement boundStatement = new BoundStatement(ps);
                 session.execute( // this is where the query is executed
                     boundStatement.bind( // here you are binding the 'boundStatement'
-                        user,picid));
+                        picid, user));
             }
             BoundStatement bsInsertPic = new BoundStatement(psInsertPic);
             session.execute(bsInsertPic.bind(picid, buffer, thumbbuf,processedbuf, user, DateAdded, length,thumblength,processedlength, type, name));

@@ -17,16 +17,15 @@
     <body>
         <header>
             <h1>InstaGrim ! </h1>
-            <h2>Your world in Black and White</h2>
+            <h2>Account Details</h2>
         </header>
-    <body>
-        <p>Account Details</p>
-        
+    <body>        
         <form method="POST" enctype="multipart/form-data" action="Account">
-                Upload new profile Picture <input type="file" name="upfile"><br/>
-
-                <br/>
-                <input type="submit" value="Upload">
+                Change Profile Picture <input type="file" name="upfile">
+                Change Password:
+                                <input type="password" name=""
+                <input type="submit" value="Submit">
+                
         </form>
     </body>
         <nav>

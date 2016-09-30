@@ -122,7 +122,7 @@ public class User {
     public UUID getProfileUUID(String username){
         Session session = cluster.connect("instagrim");
         PreparedStatement ps = session.prepare("select profile_picid from userprofiles where login =?");
-        ResultSet rs = null;
+        ResultSet rs;
         BoundStatement boundStatement = new BoundStatement(ps);
         rs = session.execute( // this is where the query is executed
                 boundStatement.bind( // here you are binding the 'boundStatement'

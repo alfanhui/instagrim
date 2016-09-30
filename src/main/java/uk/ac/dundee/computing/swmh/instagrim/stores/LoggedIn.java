@@ -48,7 +48,12 @@ public class LoggedIn {
     public void setLogedout(){
         logedin=false;
     }
-    
+    public boolean hasProfilePic(){
+        if (this.uuid == null){
+            return false;
+        }else
+            return true;
+    }
     public void setLoginState(boolean logedin){
         this.logedin=logedin;
     }

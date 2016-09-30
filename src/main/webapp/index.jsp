@@ -31,11 +31,16 @@
                                 
                     %>
                 <h3><%=lg.getUsername()%></h3>
-                <img src="/Image.DisplayImage?imageId=${lg.getProfileUUID()}"/>
                 
+                <% if(lg.hasProfilePic()){ %>
+                <img src="/Instagrim/Thumb/<%=lg.getProfileUUID()%>" width="80" height="80"/>
+                <%}else{ %>
+                    <img src="profiledefault.png" alt="profile picture" width="80" height="58" />
+                <%}%>
                 <li><a href="upload.jsp">Upload</a></li>
                 <li><a href="/Instagrim/Images/<%=lg.getUsername()%>">Your Images</a></li>
-                <li><a href="account.jsp">Profile</a></li>
+               
+                <li><a href="account.jsp">Settings</a></li>
                 <form method="POST"  action="Logout">
                 <ul>
                 </ul>

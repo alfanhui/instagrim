@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import uk.ac.dundee.computing.swmh.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.swmh.instagrim.models.PicModel;
+import uk.ac.dundee.computing.swmh.instagrim.models.User;
 import uk.ac.dundee.computing.swmh.instagrim.stores.LoggedIn;
 
 
@@ -43,6 +44,8 @@ public class Account extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         for (Part part : request.getParts()) {
+            User us=new User();
+            us.setCluster(cluster);
             System.out.println("Part Name " + part.getName());
 
             String type = part.getContentType();
@@ -63,13 +66,17 @@ public class Account extends HttpServlet {
                 PicModel tm = new PicModel();
                 tm.setCluster(cluster);
                 tm.insertPic(b, type, filename, username, true);
+                lg.setProfileUUID(us.getProfileUUID(username));
                 is.close();
             }
-            RequestDispatcher rd = request.getRequestDispatcher("/account.jsp");
-             rd.forward(request, response);
+            RequestDispatcher rd=request.getRequestDispatcher("account.jsp");
+            rd.forward(request, response);
         }
 
     }
+    
+    
+    
     
     /**
      * Returns a short description of the servlet.
