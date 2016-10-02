@@ -14,26 +14,28 @@
     </head>
     <body>
         <header>
-        <h1>InstaGrim ! </h1>
+        <h1>InstaGrim</h1>
         <h2>Your world in Black and White</h2>
         </header>
         <nav>
-            <ul>
-                
-                <li><a href="/Instagrim/Images/majed">Sample Images</a></li>
-            </ul>
         </nav>
        
         <article>
             <h3>Register as user</h3>
-            <form method="POST"  action="Register">
+            <form method="POST" action="Register">
                 <ul>
-                    <li>User Name <input type="text" name="username"></li>
-                    <li>Password <input type="password" name="password"></li>
+                    <li>User Name <input type="text" name="username"><font color="red">${UsernameCheck}</font></li> 
+                    <li>Password <input type="password" name="password"><font color="red">${PasswordCheck}</font></li> 
+                    <li>Confirm Password <input type="password" name="passwordCheck"></li>
+                    <li>Email Address <input type="email" name="email"></li>
                 </ul>
                 <br/>
                 <input type="submit" value="Register"> 
-            </form>
+                <%
+                session.setAttribute("UsernameCheck", null); 
+                session.setAttribute("PasswordCheck", null);
+                %>
+                </form>
 
         </article>
         <footer>
