@@ -25,21 +25,17 @@
     <body>        
         <form method="POST" enctype="multipart/form-data" action="Account">
             <h3>Change Profile Picture</h3> <input type="file" name="upfile"> <p>
-                <br>
-            <h3>Change Password:</h3><p></p>
-                Old Password    <input type="password" name="oldPassword"><p></p>
-                New Password    <input type="password" name="newPassword"><p></p>
-                Confirm Password<input type="password" name="CheckPassword"></br>
-                
-                <input type="submit" value="Submit">
-                
+            <br>
+            <h3>Change Password:</h3>
+            <p>    Old Password:<input type="password" name="oldPassword"><br>
+            <p>    New Password:<input type="password" name="newPassword"><br>
+            <p>Confirm Password:<input type="password" name="CheckPassword"></br></p>
+            
+            <input type="submit" value="Submit">        
         </form>
     </body>
-        
         <footer>
-            <ul>
-                <li class="footer"><a href="/Instagrim">Home</a></li>
-            </ul>
+            <jsp:include page="footer.jsp"></jsp:include>
         </footer>
     </body>
 </html>

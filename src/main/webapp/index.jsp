@@ -15,19 +15,17 @@
         <link rel="stylesheet" type="text/css" href="Styles.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
+    <nav>
+        <jsp:include page="nav.jsp"></jsp:include>   
+    </nav>
     <body>
         <header>
-            <h1>InstaGrim</h1>
-            <h2>Your world in Black and White</h2>
+            <h1>I n s t a G r i m</h1>
+            <h2>Your world in Black & White</h2>
         </header>
-       <nav>
-        <jsp:include page="nav.jsp"></jsp:include>   
-        </nav>
+       
         <footer>
-            <ul>
-                <li class="footer"><a href="/Instagrim">Home</a></li>
-                <li>&COPY; SWMH</li>
-            </ul>
+            <jsp:include page="footer.jsp"></jsp:include>
         </footer>
     </body>
 </html>

@@ -29,7 +29,7 @@ import uk.ac.dundee.computing.swmh.instagrim.stores.LoggedIn;
  *
  * @author Administrator
  */
-@WebServlet(name = "Account", urlPatterns = {"/Account"})
+@WebServlet(name = "Account", urlPatterns = {"/Profile"})
 @MultipartConfig
 public class Account extends HttpServlet {
     private Cluster cluster=null;
@@ -75,6 +75,12 @@ public class Account extends HttpServlet {
 
     }
     
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException{ 
+            RequestDispatcher rd=request.getRequestDispatcher("account.jsp");
+	    rd.forward(request,response);
+    }
     
     
     

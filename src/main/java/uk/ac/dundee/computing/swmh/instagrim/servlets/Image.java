@@ -32,7 +32,8 @@ import uk.ac.dundee.computing.swmh.instagrim.stores.Pic;
     "/Image/*",
     "/Thumb/*",
     "/Images",
-    "/Images/*"
+    "/Images/*",
+    "/Upload"
 })
 @MultipartConfig
 
@@ -70,24 +71,29 @@ public class Image extends HttpServlet {
         // TODO Auto-generated method stub
         String args[] = Convertors.SplitRequestPath(request);
         int command;
-        try {
-            command = (Integer) CommandsMap.get(args[1]);
-        } catch (Exception et) {
-            error("Bad Operator", response);
-            return;
-        }
-        switch (command) {
-            case 1:
-                DisplayImage(Convertors.DISPLAY_PROCESSED,args[2], response);
-                break;
-            case 2:
-                DisplayImageList(args[2], request, response);
-                break;
-            case 3:
-                DisplayImage(Convertors.DISPLAY_THUMB,args[2],  response);
-                break;
-            default:
+        if(args[1].equals("Upload")){
+            RequestDispatcher rd = request.getRequestDispatcher("upload.jsp");
+            rd.forward(request, response);
+        }else{
+            try {
+                command = (Integer) CommandsMap.get(args[1]);
+            } catch (Exception et) {
                 error("Bad Operator", response);
+                return;
+            }
+            switch (command) {
+                case 1:
+                    DisplayImage(Convertors.DISPLAY_PROCESSED,args[2], response);
+                    break;
+                case 2:
+                    DisplayImageList(args[2], request, response);
+                    break;
+                case 3:
+                    DisplayImage(Convertors.DISPLAY_THUMB,args[2],  response);
+                    break;
+                default:
+                    error("Bad Operator", response);
+            }  
         }
     }
 
@@ -98,8 +104,8 @@ public class Image extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher("/usersPics.jsp");
         request.setAttribute("Pics", lsPics);
         rd.forward(request, response);
-
     }
+    
     private void DisplayImage(int type,String Image, HttpServletResponse response) throws ServletException, IOException {
         PicModel tm = new PicModel();
         tm.setCluster(cluster);
@@ -129,30 +135,30 @@ public class Image extends HttpServlet {
             int i = is.available();
             HttpSession session=request.getSession();
             LoggedIn lg= (LoggedIn)session.getAttribute("LoggedIn");
-            String username="majed";
-            if (lg.getlogedin()){
-                username=lg.getUsername();
-            }
-            if (i > 0) {
-                byte[] b = new byte[i + 1];
-                is.read(b);
-                System.out.println("Length : " + b.length);
-                PicModel tm = new PicModel();
-                tm.setCluster(cluster);
-                tm.insertPic(b, type, filename, username, false);
-                is.close();
-            }
-            RequestDispatcher rd = request.getRequestDispatcher("/upload.jsp");
-             rd.forward(request, response);
+            if(lg.getlogedin()){
+                String username=lg.getUsername();
+                if(i > 0){
+                    byte[] b = new byte[i + 1];
+                    is.read(b);
+                    System.out.println("Length : " + b.length);
+                    PicModel tm = new PicModel();
+                    tm.setCluster(cluster);
+                    tm.insertPic(b, type, filename, username, false);
+                    is.close();
+                }
+                RequestDispatcher rd = request.getRequestDispatcher("/upload.jsp");
+                rd.forward(request, response);
+            }else{
+                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+                rd.forward(request, response);
+            } 
         }
-
     }
 
     private void error(String mess, HttpServletResponse response) throws ServletException, IOException {
-
         PrintWriter out = null;
         out = new PrintWriter(response.getOutputStream());
-        out.println("<h1>You have a na error in your input</h1>");
+        out.println("<h1>You have an error in your input</h1>");
         out.println("<h2>" + mess + "</h2>");
         out.close();
         return;

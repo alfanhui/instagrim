@@ -14,19 +14,15 @@
         <title>Instagrim</title>
         <link rel="stylesheet" type="text/css" href="/Instagrim/Styles.css" />
     </head>
+    <nav>
+        <jsp:include page="nav.jsp"></jsp:include>   
+    </nav>
     <body>
         <header>
-        
-        <h1>InstaGrim</h1>
-        <h2>Your world in Black and White</h2>
+            <h1>I n s t a G r i m</h1>
+            <h2>Your Stream</h2>
         </header>
-        
-        <nav>
-        <jsp:include page="nav.jsp"></jsp:include>   
-        </nav>
- 
         <article>
-            <h1>Your Pics</h1>
         <%
             java.util.LinkedList<Pic> lsPics = (java.util.LinkedList<Pic>) request.getAttribute("Pics");
             if (lsPics == null) {
@@ -36,20 +32,23 @@
         } else {
             Iterator<Pic> iterator;
             iterator = lsPics.iterator();
+            int counter = 0;
             while (iterator.hasNext()) {
                 Pic p = (Pic) iterator.next();
-
-        %>
-        <a href="/Instagrim/Image/<%=p.getSUUID()%>" ><img src="/Instagrim/Thumb/<%=p.getSUUID()%>"></a><br/><%
+                %>
+                <a href="/Instagrim/Image/<%=p.getSUUID()%>" ><img src="/Instagrim/Thumb/<%=p.getSUUID()%>"></a> 
+                <%if(counter==3){
+                    counter=0;%>
+                    </br>
+                    <p></p>
+                <%}                
 
             }
-            }
+        }
         %>
         </article>
         <footer>
-            <ul>
-                <li class="footer"><a href="/Instagrim">Home</a></li>
-            </ul>
+            <jsp:include page="footer.jsp"></jsp:include>
         </footer>
-    </body>
+      </body>
 </html>

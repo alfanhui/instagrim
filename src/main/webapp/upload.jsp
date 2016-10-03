@@ -12,27 +12,22 @@
         <title>Instagrim</title>
         <link rel="stylesheet" type="text/css" href="Styles.css" />
     </head>
-    <body>
-        <h1>InstaGrim</h1>
-        <h2>Your world in Black and White</h2>
-        <nav>
+    <nav>
         <jsp:include page="nav.jsp"></jsp:include>   
-        </nav>
- 
+    </nav>
+    <body>
+        <header>
+            <h1>I n s t a G r i m</h1>
+            <h2>Upload Photos</h2>
+        </header>
         <article>
-            <h3>File Upload</h3>
             <form method="POST" enctype="multipart/form-data" action="Image">
-                File to upload: <input type="file" name="upfile"><br/>
-
-                <br/>
+                File to upload: <input type="file" name="upfile">
                 <input type="submit" value="Press"> to upload the file!
             </form>
-
         </article>
         <footer>
-            <ul>
-                <li class="footer"><a href="/Instagrim">Home</a></li>
-            </ul>
+            <jsp:include page="footer.jsp"></jsp:include>
         </footer>
     </body>
 </html>

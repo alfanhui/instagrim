@@ -12,16 +12,17 @@
         <title>Instagrim</title>
         <link rel="stylesheet" type="text/css" href="Styles.css" />
     </head>
+    <nav>
+            <jsp:include page="nav.jsp"></jsp:include>   
+    </nav>
     <body>
         <header>
-        <h1>InstaGrim</h1>
-        <h2>Your world in Black and White</h2>
+        <h1>I n s t a G r i m</h1>
+        <h2>Register</h2>
         </header>
-        <nav>
-        </nav>
+        
        
         <article>
-            <h3>Register as user</h3>
             <form method="POST" action="Register">
                 <ul>
                     <li>User Name <input type="text" name="username"><font color="red">${UsernameCheck}</font></li> 
@@ -39,9 +40,7 @@
 
         </article>
         <footer>
-            <ul>
-                <li class="footer"><a href="/Instagrim">Home</a></li>
-            </ul>
+            <jsp:include page="footer.jsp"></jsp:include>
         </footer>
     </body>
 </html>

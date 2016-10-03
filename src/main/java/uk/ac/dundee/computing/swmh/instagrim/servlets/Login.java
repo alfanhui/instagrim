@@ -67,11 +67,17 @@ public class Login extends HttpServlet {
             
         }else{
             session.setAttribute("InvalidLogin", "Invalid Username or Password");
-            response.sendRedirect("/Instagrim/login.jsp");
+            response.sendRedirect("/Instagrim/Login");
         }
         
     }
     
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException{ 
+            RequestDispatcher rd=request.getRequestDispatcher("login.jsp");
+	    rd.forward(request,response);
+    }
     
     
     

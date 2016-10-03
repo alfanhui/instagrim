@@ -13,21 +13,20 @@
         <link rel="stylesheet" type="text/css" href="Styles.css" />
 
     </head>
+    <nav>
+    </nav>
     <body>
         <header>
-        <h1>InstaGrim</h1>
-        <h2>Your world in Black and White</h2>
+        <h1>I n s t a G r i m</h1>
+        <h2>Login</h2>
         </header>
-        <nav>
-        </nav>
-       
+        
         <article>
-            <h3>Login</h3>
             <form method="POST"  action="Login">
                 <ul>
                     <font color="red">${InvalidLogin}</font>
-                    <li>User Name <input type="text" name="username"></li>
-                    <li>Password <input type="password" name="password"></li>
+                    <p>User Name <input type="text" name="username"></p>
+                    <p>Password <input type="password" name="password"></p>
                 </ul>
                 <br/>
                 <input type="submit" value="Login"> 
@@ -35,11 +34,12 @@
             <%
                 session.setAttribute("InvalidLogin", null);
             %>
+            <ul>
+                <p><a href="/Instagrim/Register">or Register!</a></p>
+            </ul>
         </article>
         <footer>
-            <ul>
-                <li class="footer"><a href="/Instagrim">Home</a></li>
-            </ul>
+            <jsp:include page="footer.jsp"></jsp:include>
         </footer>
     </body>
 </html>
