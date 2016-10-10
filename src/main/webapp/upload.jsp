@@ -22,8 +22,12 @@
         </header>
         <article>
             <form method="POST" enctype="multipart/form-data" action="Image">
-                File to upload: <input type="file" name="upfile">
-                <input type="submit" value="Press"> to upload the file!
+                <p>Files to upload:</p>
+                <input type="file" name="upfile0"></br>
+                <input type="file" name="upfile1"></br>
+                <input type="file" name="upfile2"></br>
+                <input type="file" name="upfile3"></br>
+                <input type="submit" value="UPLOAD" width="150" height="150">
             </form>
         </article>
         <footer>

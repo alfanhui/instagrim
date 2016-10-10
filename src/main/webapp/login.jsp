@@ -14,6 +14,7 @@
 
     </head>
     <nav>
+        <jsp:include page="nav.jsp"></jsp:include>
     </nav>
     <body>
         <header>
@@ -27,9 +28,9 @@
                     <font color="red">${InvalidLogin}</font>
                     <p>User Name <input type="text" name="username"></p>
                     <p>Password <input type="password" name="password"></p>
+                    <input type="submit" value="LOGIN"> 
                 </ul>
                 <br/>
-                <input type="submit" value="Login"> 
             </form>
             <%
                 session.setAttribute("InvalidLogin", null);

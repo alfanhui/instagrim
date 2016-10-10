@@ -25,13 +25,12 @@
         <article>
             <form method="POST" action="Register">
                 <ul>
-                    <li>User Name <input type="text" name="username"><font color="red">${UsernameCheck}</font></li> 
-                    <li>Password <input type="password" name="password"><font color="red">${PasswordCheck}</font></li> 
-                    <li>Confirm Password <input type="password" name="passwordCheck"></li>
-                    <li>Email Address <input type="email" name="email"></li>
-                </ul>
-                <br/>
-                <input type="submit" value="Register"> 
+                    <p>User Name       <input type="text" name="username"><font color="red">${UsernameCheck}</font></p>
+                    <p>Password        <input type="password" name="password"><font color="red">${PasswordCheck}</font></p> 
+                    <p>Confirm Password<input type="password" name="passwordCheck"></p>
+                    <p>Email Address   <input type="email" name="email"></p>
+                    <input type="submit" value="REGISTER">
+                </ul>  
                 <%
                 session.setAttribute("UsernameCheck", null); 
                 session.setAttribute("PasswordCheck", null);

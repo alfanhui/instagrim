@@ -22,7 +22,6 @@ import com.datastax.driver.core.utils.Bytes;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -86,7 +85,7 @@ public class PicModel {
                         picid, user));
             }
             BoundStatement bsInsertPic = new BoundStatement(psInsertPic);
-            session.execute(bsInsertPic.bind(picid, buffer, thumbbuf,processedbuf, user, DateAdded, length,thumblength,processedlength, type, name));
+            session.execute(bsInsertPic.bind(picid,buffer,thumbbuf,processedbuf,user,DateAdded,length,thumblength,processedlength,type,name));
             session.close();
 
         } catch (IOException ex) {
@@ -94,6 +93,7 @@ public class PicModel {
         }
     }
     
+
 
     public byte[] picresize(String picid,String type) {
         try {
@@ -115,6 +115,7 @@ public class PicModel {
     public byte[] picdecolour(String picid,String type) {
         try {
             BufferedImage BI = ImageIO.read(new File("/var/tmp/instagrim/" + picid));
+            //BufferedImage resizedBI = org.imgscalr.Scalr.resize(BI, 300);
             BufferedImage processed = createProcessed(BI);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(processed, type, baos);

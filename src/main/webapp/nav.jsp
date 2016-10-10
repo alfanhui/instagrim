@@ -18,7 +18,7 @@
                         <% if(lg.hasProfilePic()){ %>
                             <img src="/Instagrim/Thumb/<%=lg.getProfileUUID()%>" width="100" height="100"/>
                         <%}else{%>
-                            <img src="resources/profiledefault.png" alt="profile picture" width="80" height="58" />
+                            <img src="/Instagrim/resources/profiledefault.png" alt="profile picture" width="80" height="58" />
                         <%}%>
                     <li><a href="/Instagrim/Upload">Upload</a></li>
                     <li><a href="/Instagrim/Images/<%=lg.getUsername()%>">Your Images</a></li>
