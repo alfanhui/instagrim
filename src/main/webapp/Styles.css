@@ -74,9 +74,12 @@ footer{
 }
 
 article {
+   position: left;
    padding:10px;
-   padding-bottom:60px;  
+   padding-bottom:60px; 
+   
 }
+
 
 input[type=submit]{
     font-size: 16px;

@@ -21,14 +21,20 @@
             <h2>Upload Photos</h2>
         </header>
         <article>
+            <ul>
+            <p><font color="green">${uploadok}</font></p>
+            <p><font color="red">${uploadbad}</font></p>
             <form method="POST" enctype="multipart/form-data" action="Image">
                 <p>Files to upload:</p>
                 <input type="file" name="upfile0"></br>
                 <input type="file" name="upfile1"></br>
-                <input type="file" name="upfile2"></br>
-                <input type="file" name="upfile3"></br>
                 <input type="submit" value="UPLOAD" width="150" height="150">
             </form>
+            <%
+                session.setAttribute("uploadok", null);
+                session.setAttribute("uploadbad", null);
+            %>
+            </ul>
         </article>
         <footer>
             <jsp:include page="footer.jsp"></jsp:include>

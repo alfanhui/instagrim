@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.HashMap;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -21,7 +22,7 @@ import javax.servlet.http.Part;
 import uk.ac.dundee.computing.swmh.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.swmh.instagrim.lib.Convertors;
 import uk.ac.dundee.computing.swmh.instagrim.models.PicModel;
-import uk.ac.dundee.computing.swmh.instagrim.stores.LoggedIn;
+import uk.ac.dundee.computing.swmh.instagrim.stores.LogedIn;
 import uk.ac.dundee.computing.swmh.instagrim.stores.Pic;
 
 /**
@@ -42,7 +43,6 @@ public class Image extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private Cluster cluster;
     private HashMap CommandsMap = new HashMap();
-    
     
 
     /**
@@ -69,6 +69,7 @@ public class Image extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
+        
         String args[] = Convertors.SplitRequestPath(request);
         int command;
         if(args[1].equals("Upload")){
@@ -101,6 +102,7 @@ public class Image extends HttpServlet {
         PicModel tm = new PicModel();
         tm.setCluster(cluster);
         java.util.LinkedList<Pic> lsPics = tm.getPicsForUser(User);
+   
         RequestDispatcher rd = request.getRequestDispatcher("/usersPics.jsp");
         request.setAttribute("Pics", lsPics);
         rd.forward(request, response);
@@ -124,18 +126,23 @@ public class Image extends HttpServlet {
     }
     
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {       
+        HttpSession session=request.getSession();
         for (Part part : request.getParts()) {
             System.out.println("Part Name " + part.getName());
-
             String type = part.getContentType();
             String filename = part.getSubmittedFileName();
-            
+            System.out.print("TYPE" + type);
+            if(type.startsWith("application/octet-stream")){
+                continue;
+            }else if(!type.startsWith("image")){
+                session.setAttribute("uploadbad", "Opps, you can only upload .png .jpg .jpeg .gif files!");
+                continue;
+            }
             InputStream is = request.getPart(part.getName()).getInputStream();
             int i = is.available();
-            HttpSession session=request.getSession();
-            LoggedIn lg= (LoggedIn)session.getAttribute("LoggedIn");
-            if(lg.getlogedin()){
+            LogedIn lg= (LogedIn)session.getAttribute("LogedIn");
+            if(lg.getLogedin()){
                 String username=lg.getUsername();
                 if(i > 0){
                     byte[] b = new byte[i + 1];
@@ -143,18 +150,30 @@ public class Image extends HttpServlet {
                     System.out.println("Length : " + b.length);
                     PicModel tm = new PicModel();
                     tm.setCluster(cluster);
-                    tm.insertPic(b, type, filename, username, false);
+                    try{
+                        tm.insertPic(b, type, filename, username, false);
+                    }catch(Exception e){
+                        session.setAttribute("uploadbad", e);
+                        response.sendRedirect("/Instagrim/Upload");
+                    }
                     is.close();
                 }
-                RequestDispatcher rd = request.getRequestDispatcher("/upload.jsp");
+                session.setAttribute("uploadok", "Uploaded successful!");
+                RequestDispatcher rd = request.getRequestDispatcher("upload.jsp");
                 rd.forward(request, response);
-            }else{
-                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-                rd.forward(request, response);
-            } 
+            }
+            
+        }
+        if(session.getAttribute("uploadbad")!= null){ //Bad file
+            RequestDispatcher rd = request.getRequestDispatcher("upload.jsp");
+            rd.forward(request, response);   
+        }else{                                      //Bad username
+            RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+            rd.forward(request, response);   
         }
     }
 
+    
     private void error(String mess, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = null;
         out = new PrintWriter(response.getOutputStream());

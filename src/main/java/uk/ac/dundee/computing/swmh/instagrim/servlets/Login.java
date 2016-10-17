@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import uk.ac.dundee.computing.swmh.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.swmh.instagrim.models.User;
-import uk.ac.dundee.computing.swmh.instagrim.stores.LoggedIn;
+import uk.ac.dundee.computing.swmh.instagrim.stores.LogedIn;
 
 /**
  *
@@ -55,12 +55,12 @@ public class Login extends HttpServlet {
         HttpSession session=request.getSession();
         System.out.println("Session in servlet "+session);
         if (isValid){
-            LoggedIn lg= new LoggedIn();
+            LogedIn lg= new LogedIn();
             lg.setLogedin();
             lg.setUsername(username);
             lg.setEmail(us.getEmail(username));
             lg.setProfileUUID(us.getProfileUUID(username));
-            session.setAttribute("LoggedIn", lg);
+            session.setAttribute("LogedIn", lg);
             System.out.println("Session in servlet "+session);
             RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
 	    rd.forward(request,response);

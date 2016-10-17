@@ -22,14 +22,14 @@ import javax.servlet.http.Part;
 import uk.ac.dundee.computing.swmh.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.swmh.instagrim.models.PicModel;
 import uk.ac.dundee.computing.swmh.instagrim.models.User;
-import uk.ac.dundee.computing.swmh.instagrim.stores.LoggedIn;
+import uk.ac.dundee.computing.swmh.instagrim.stores.LogedIn;
 
 
 /**
  *
  * @author Administrator
  */
-@WebServlet(name = "Account", urlPatterns = {"/Profile"})
+@WebServlet(name = "Account", urlPatterns = {"/Account"})
 @MultipartConfig
 public class Account extends HttpServlet {
     private Cluster cluster=null;
@@ -54,10 +54,13 @@ public class Account extends HttpServlet {
             InputStream is = request.getPart(part.getName()).getInputStream();
             int i = is.available();
             HttpSession session=request.getSession();
-            LoggedIn lg= (LoggedIn)session.getAttribute("LoggedIn");
-            String username="majed";
-            if (lg.getlogedin()){
+            LogedIn lg= (LogedIn)session.getAttribute("LogedIn");
+            String username = "default";
+            if (lg.getLogedin()){
                 username=lg.getUsername();
+            }else{
+                System.out.print("Error, no user login");
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
             if (i > 0) {
                 byte[] b = new byte[i + 1];

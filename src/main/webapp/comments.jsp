@@ -20,35 +20,29 @@
     <body>
         <header>
             <h1>I n s t a G r i m</h1>
-            <h2>Your Stream</h2>
+            <h2>Comments</h2>
         </header>
         <article>
             <ul>
         <%
-            java.util.LinkedList<Pic> lsPics = (java.util.LinkedList<Pic>) request.getAttribute("Pics");
-            if (lsPics == null) {
-        %>
-        <p>No Pictures found</p>
-        <%
-        } else {
-            Iterator<Pic> iterator;
-            iterator = lsPics.iterator();
-            int counter = 0;
-            while (iterator.hasNext()) {
-                Pic p = (Pic) iterator.next();
-                %>
-                <a href="/Instagrim/Comments/<%=p.getSUUID()%>" ><img src="/Instagrim/Thumb/<%=p.getSUUID()%>"></a> 
-                <%if(counter==3){
-                    counter=0;%>
-                    </br>
-                    <p></p>
-                <%}                
+            
+            %>
+            <tr>
+                <td><a href="/Instagrim/Image/${uuid}" ><img src="/Instagrim/Thumb/${uuid}"></a><td>
+                <td>
+                    <textarea name="comments" rows = "19" cols="70" readonly> ${comments} </textarea> <br>
+                    <form method="POST"  action="Comment">
+                    <input type="text" name="commentInput" placeholder="type here to comment">
+                    session.setAttribute("uuid", ${uuid});
+                    </form>
+                </td>
+            </tr>
+                <%          
 
-            }
-        }
         %>
         <ul>
         </article>
+        
         <footer>
             <jsp:include page="footer.jsp"></jsp:include>
         </footer>

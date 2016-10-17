@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import uk.ac.dundee.computing.swmh.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.swmh.instagrim.models.User;
-import uk.ac.dundee.computing.swmh.instagrim.stores.LoggedIn;
+import uk.ac.dundee.computing.swmh.instagrim.stores.LogedIn;
 
 /**
  *
@@ -46,16 +46,16 @@ public class Logout extends HttpServlet {
             throws ServletException, IOException {
         
         HttpSession session=request.getSession();
-        LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
+        LogedIn lg = (LogedIn) session.getAttribute("LogedIn");
         if (lg != null) {
             lg.setLogedout();
-            session.setAttribute("LoggedIn", null);
+            session.setAttribute("LogedIn", null);
             
             //response.sendRedirect("/Instagrim");
             RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
 	    rd.forward(request,response);
         }else{
-            response.sendRedirect("/Instagrim/login.jsp");
+            response.sendRedirect("/Instagrim/Login");
         }
         
         

@@ -11,7 +11,7 @@ package uk.ac.dundee.computing.swmh.instagrim.stores;
  *
  * @author Administrator
  */
-public class LoggedIn {
+public class LogedIn {
     private boolean logedin=false;
     private String Username=null;
     private String Email=null;
@@ -42,7 +42,7 @@ public class LoggedIn {
     public void setLogedin(){
         logedin=true;
     }
-    public boolean getlogedin(){
+    public boolean getLogedin(){
         return logedin;
     }
     public void setLogedout(){

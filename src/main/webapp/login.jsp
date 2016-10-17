@@ -25,7 +25,7 @@
         <article>
             <form method="POST"  action="Login">
                 <ul>
-                    <font color="red">${InvalidLogin}</font>
+                    <p><font color="red">${InvalidLogin}</font></p>
                     <p>User Name <input type="text" name="username"></p>
                     <p>Password <input type="password" name="password"></p>
                     <input type="submit" value="LOGIN"> 

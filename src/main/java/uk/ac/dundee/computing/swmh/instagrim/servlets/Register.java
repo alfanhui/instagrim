@@ -22,7 +22,7 @@ import javax.servlet.http.Part;
 import uk.ac.dundee.computing.swmh.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.swmh.instagrim.models.PicModel;
 import uk.ac.dundee.computing.swmh.instagrim.models.User;
-import uk.ac.dundee.computing.swmh.instagrim.stores.LoggedIn;
+import uk.ac.dundee.computing.swmh.instagrim.stores.LogedIn;
 
 /**
  *
@@ -67,10 +67,10 @@ public class Register extends HttpServlet {
             response.sendRedirect("/Instagrim/register.jsp");
         }else{
         us.RegisterUser(username, password, email);
-        LoggedIn lg= new LoggedIn();
+        LogedIn lg= new LogedIn();
         lg.setLogedin();
         lg.setUsername(username);            
-        session.setAttribute("LoggedIn", lg);
+        session.setAttribute("LogedIn", lg);
 	response.sendRedirect("/Instagrim");
         }
     }

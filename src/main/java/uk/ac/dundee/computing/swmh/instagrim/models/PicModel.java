@@ -93,6 +93,39 @@ public class PicModel {
         }
     }
     
+    public void setComment(String picid, String comment){
+        Session session = cluster.connect("instagrim");
+        PreparedStatement psInsertCommentPic = session.prepare("update pics set comments = comments + ? where picid=?");
+        BoundStatement bsInsertCommentPic = new BoundStatement(psInsertCommentPic);
+        session.execute(
+                bsInsertCommentPic.bind(
+                       comment, java.util.UUID.fromString(picid)));
+    }
+    
+    public String[] getComment(String picid){
+        Session session = cluster.connect("instagrim");
+        PreparedStatement ps = session.prepare("select comments from pics where picid =?");
+        BoundStatement boundStatement = new BoundStatement(ps);
+        
+        ResultSet rs = session.execute( // this is where the query is executed
+                boundStatement.bind( // here you are binding the 'boundStatement'
+                        java.util.UUID.fromString(picid)));
+        int arrayLength = rs.getAvailableWithoutFetching();
+        String comments[] = new String[arrayLength];
+        int i = 0;
+        if (rs.isExhausted()) {
+            System.out.println("No Images returned");
+            return null;
+        } else {
+            for(Row row: rs){
+                comments[i] = row.toString();
+                i++;
+            }
+            return comments;
+        }
+        
+    }
+    
 
 
     public byte[] picresize(String picid,String type) {
@@ -130,15 +163,15 @@ public class PicModel {
     }
 
     public static BufferedImage createThumbnail(BufferedImage img) {
-        img = resize(img, Method.SPEED, 250, OP_ANTIALIAS, OP_GRAYSCALE);
+        img = resize(img, Method.SPEED, Mode.FIT_TO_HEIGHT, 250, OP_ANTIALIAS, OP_GRAYSCALE);
         // Let's add a little border before we return result.
-        return pad(img, 2);
+        return pad(img, 1);
     }
     
    public static BufferedImage createProcessed(BufferedImage img) {
         int Width=img.getWidth()-1;
         img = resize(img, Method.SPEED, Width, OP_ANTIALIAS, OP_GRAYSCALE);
-        return pad(img, 4);
+        return pad(img, 2);
     }
    
     public java.util.LinkedList<Pic> getPicsForUser(String User) {
@@ -150,6 +183,7 @@ public class PicModel {
         rs = session.execute( // this is where the query is executed
                 boundStatement.bind( // here you are binding the 'boundStatement'
                         User));
+        
         if (rs.isExhausted()) {
             System.out.println("No Images returned");
             return null;

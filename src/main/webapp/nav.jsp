@@ -4,15 +4,15 @@
     Author     : Alfanhui
 --%>
 
-<%@page import="uk.ac.dundee.computing.swmh.instagrim.stores.LoggedIn"%>
+<%@page import="uk.ac.dundee.computing.swmh.instagrim.stores.LogedIn"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <ul>
-        <%LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
+        <%LogedIn lg = (LogedIn) session.getAttribute("LogedIn");
             if (lg != null) {
                 String UserName = lg.getUsername();
-                    if (lg.getlogedin()) {
+                    if (lg.getLogedin()) {
                         %>
                         <h3><%=lg.getUsername()%></h3>        
                         <% if(lg.hasProfilePic()){ %>
@@ -24,7 +24,7 @@
                     <li><a href="/Instagrim/Images/<%=lg.getUsername()%>">Your Images</a></li>
                     <li><a href="/Instagrim/Profile">Settings</a></li>
                     <form method="POST"  action="Logout">
-                        <input type="submit" value="Logout">     
+                        <input type="submit" value="LOGOUT">     
                     </form>
                     <%}
             }else{%>
