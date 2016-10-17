@@ -95,11 +95,14 @@ public class PicModel {
     
     public void setComment(String picid, String comment){
         Session session = cluster.connect("instagrim");
+        comment = "{" + comment + "}";
+        char[] comments = comment.toCharArray();
+        System.out.println("HERE: " + comments);
         PreparedStatement psInsertCommentPic = session.prepare("update pics set comments = comments + ? where picid=?");
         BoundStatement bsInsertCommentPic = new BoundStatement(psInsertCommentPic);
         session.execute(
                 bsInsertCommentPic.bind(
-                       comment, java.util.UUID.fromString(picid)));
+                       comments, java.util.UUID.fromString(picid)));
     }
     
     public String[] getComment(String picid){
@@ -114,10 +117,11 @@ public class PicModel {
         String comments[] = new String[arrayLength];
         int i = 0;
         if (rs.isExhausted()) {
-            System.out.println("No Images returned");
+            
             return null;
         } else {
             for(Row row: rs){
+                System.out.print("FOUND:" + comments[i]);
                 comments[i] = row.toString();
                 i++;
             }

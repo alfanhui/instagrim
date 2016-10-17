@@ -8,8 +8,6 @@ package uk.ac.dundee.computing.swmh.instagrim.servlets;
 
 import com.datastax.driver.core.Cluster;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -18,9 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
 import uk.ac.dundee.computing.swmh.instagrim.lib.CassandraHosts;
-import uk.ac.dundee.computing.swmh.instagrim.models.PicModel;
 import uk.ac.dundee.computing.swmh.instagrim.models.User;
 import uk.ac.dundee.computing.swmh.instagrim.stores.LogedIn;
 
@@ -31,6 +27,8 @@ import uk.ac.dundee.computing.swmh.instagrim.stores.LogedIn;
 @WebServlet(name = "Register", urlPatterns = {"/Register"})
 public class Register extends HttpServlet {
     Cluster cluster=null;
+    
+    @Override
     public void init(ServletConfig config) throws ServletException {
         // TODO Auto-generated method stub
         cluster = CassandraHosts.getCluster();
@@ -63,15 +61,19 @@ public class Register extends HttpServlet {
             session.setAttribute("PasswordCheck", "Passwords do not match!");
             response.sendRedirect("/Instagrim/register.jsp");
         }else if(!us.IsValidUsername(username)){
-            session.setAttribute("UsernameCheck", "Username already used!");
+            session.setAttribute("UsernameCheck", "Username already taken!");
+            response.sendRedirect("/Instagrim/register.jsp");
+        }else if(!us.IsValidPassword(password)){
+            //Password Check failed
+            session.setAttribute("PasswordCheck", "Password must be at least 6 characters long.");
             response.sendRedirect("/Instagrim/register.jsp");
         }else{
-        us.RegisterUser(username, password, email);
-        LogedIn lg= new LogedIn();
-        lg.setLogedin();
-        lg.setUsername(username);            
-        session.setAttribute("LogedIn", lg);
-	response.sendRedirect("/Instagrim");
+            us.RegisterUser(username, password, email);
+            LogedIn lg= new LogedIn();
+            lg.setLogedin();
+            lg.setUsername(username);            
+            session.setAttribute("LogedIn", lg);
+            response.sendRedirect("/Instagrim");
         }
     }
     

@@ -84,6 +84,9 @@ public class User {
     }
 
     public boolean IsValidUsername(String username){
+        if(username.length() < 5){
+            return false;
+        }
         Session session = cluster.connect("instagrim");
         PreparedStatement ps = session.prepare("select login from userprofiles where login =?");
         ResultSet rs = null;
@@ -95,6 +98,13 @@ public class User {
             System.out.println("Username free");
             return true;
         } else return false;
+    }
+    
+    public boolean IsValidPassword(String password){
+        if(password.length() <5){
+            return false;
+        }
+        return true;
     }
     
     public String getEmail(String username){

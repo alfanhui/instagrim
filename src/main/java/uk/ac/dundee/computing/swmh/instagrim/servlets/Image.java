@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.HashMap;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -57,6 +56,7 @@ public class Image extends HttpServlet {
 
     }
 
+    @Override
     public void init(ServletConfig config) throws ServletException {
         // TODO Auto-generated method stub
         cluster = CassandraHosts.getCluster();

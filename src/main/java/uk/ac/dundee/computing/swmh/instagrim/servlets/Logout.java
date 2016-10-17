@@ -6,9 +6,7 @@
 
 package uk.ac.dundee.computing.swmh.instagrim.servlets;
 
-import com.datastax.driver.core.Cluster;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -17,8 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import uk.ac.dundee.computing.swmh.instagrim.lib.CassandraHosts;
-import uk.ac.dundee.computing.swmh.instagrim.models.User;
 import uk.ac.dundee.computing.swmh.instagrim.stores.LogedIn;
 
 /**
@@ -27,11 +23,6 @@ import uk.ac.dundee.computing.swmh.instagrim.stores.LogedIn;
  */
 @WebServlet(name = "Logout", urlPatterns = {"/Logout"})
 public class Logout extends HttpServlet {
-
-    public void init(ServletConfig config) throws ServletException {
-        // TODO Auto-generated method stub
-        
-    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
