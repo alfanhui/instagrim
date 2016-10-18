@@ -94,7 +94,7 @@ public class PicModel {
         }
     }
     
-    public void setComment(String picid, String comment){
+    public void setComment(String picid, String comment, String username, String timeStamp){
         Session session = cluster.connect("instagrim");
         PreparedStatement ps = session.prepare("select comments from pics where picid =?");
         BoundStatement boundStatement = new BoundStatement(ps);
@@ -106,8 +106,7 @@ public class PicModel {
             if(row.getString("comments")!=null)
                 comments += row.getString("comments");
         }
-        comments += comment + "~@!";
-        System.out.println("HERE2: " + comments);
+        comments += comment + "~@!  " + username + "~@!  " + timeStamp + "~@!";
         PreparedStatement psInsertCommentPic = session.prepare("update pics set comments = ? where picid=?");
         BoundStatement bsInsertCommentPic = new BoundStatement(psInsertCommentPic);
         session.execute(
@@ -116,7 +115,6 @@ public class PicModel {
     }
     
     public String[] getComment(String picid){
-        System.out.println("PCID : " + picid);
         Session session = cluster.connect("instagrim");
         PreparedStatement ps = session.prepare("select comments from pics where picid =?");
         BoundStatement boundStatement = new BoundStatement(ps);
@@ -128,7 +126,8 @@ public class PicModel {
         }else{
             String[] comments = null;
             for(Row row: rs){
-                comments = row.getString("comments").split("~@!");
+                if(row.getString("comments")!=null)
+                    comments = row.getString("comments").split("~@!");
             }
             return comments;  
         }    

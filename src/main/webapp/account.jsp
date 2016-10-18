@@ -26,8 +26,8 @@
         <form method="POST" enctype="multipart/form-data" action="Account">
             <h3>Change Profile Picture</h3> <input type="file" name="upfile"><p><font color="red">${uploadBad}</font></p>
             <br>
-            <h3>Change Password:</h3><p><font color="green">${passwordOk}</font><font color="red">${passwordBad}</font></p>
-            <p>        Old Password:<input type="password" name="oldPassword"><br></p><p><font color="red">${passwordCheck}</font></p>
+            <h3>Change Password:</h3><p><font color="green">${passwordOk}</font></p><p><font color="red">${passwordBad}</font></p>
+            <p>        Old Password:<input type="password" name="oldPassword"><br></p><p><font color="red">${PasswordCheck}</font></p>
             <p>        New Password:<input type="password" name="newPassword"><br></p><p><font color="red">${newPasswordCheck}</font></p></p>
             <p>Confirm New Password:<input type="password" name="passwordCheck"><br></p>
             <br>

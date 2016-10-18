@@ -8,6 +8,8 @@ package uk.ac.dundee.computing.swmh.instagrim.servlets;
 
 import com.datastax.driver.core.Cluster;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import uk.ac.dundee.computing.swmh.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.swmh.instagrim.models.PicModel;
+import uk.ac.dundee.computing.swmh.instagrim.stores.LogedIn;
 
 
 /**
@@ -42,7 +45,6 @@ public class Comments extends HttpServlet {
             HttpSession session=request.getSession();
             String uri = request.getRequestURI();
             String[] parts = uri.split("/");
-            System.out.print("PART3: " + parts[3]);
             session.setAttribute("uuid", parts[3]);
             PicModel tm = new PicModel();
             tm.setCluster(cluster);
@@ -57,12 +59,19 @@ public class Comments extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             HttpSession session=request.getSession();
+            LogedIn lg= (LogedIn)session.getAttribute("LogedIn");
             String uuid = (String)session.getAttribute("uuid");
             String comment = request.getParameter("commentInput");
+            String timeStamp = new SimpleDateFormat("HH:mm dd.MM.yy").format(new Date()); 
+            timeStamp = "(" + timeStamp + ")";
             PicModel tm = new PicModel();
             tm.setCluster(cluster);
-            tm.setComment(uuid, comment);
-            //response.sendRedirect("/Instagrim/Comments/" + uuid);
+            tm.setComment(uuid, comment, lg.getUsername(), timeStamp);
+            
+            //Update comment box
+            String commentArray[] = tm.getComment(uuid);
+            session.setAttribute("comments", commentArray);
+            
             RequestDispatcher rd = request.getRequestDispatcher("/comments.jsp");
             rd.forward(request, response);
         }

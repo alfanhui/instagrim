@@ -43,7 +43,7 @@ public class Account extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session=request.getSession();
+        HttpSession session = request.getSession();
         session.setAttribute("uploadbad", null);
         session.setAttribute("passwordBad", null);
         session.setAttribute("passwordOk", null);
@@ -56,51 +56,30 @@ public class Account extends HttpServlet {
        
         if(lg != null){
             String username=lg.getUsername();
-            
+           
+            String oldPassword = request.getParameter("oldPassword");
+            String newPassword = request.getParameter("newPassword");
+            String passwordCheck=request.getParameter("passwordCheck");
             //Update Password
-                
-                String oldPassword=request.getParameter("newPassword");
-                String newPassword=request.getParameter("oldPassword");
-                String passwordCheck=request.getParameter("passwordCheck");
-                boolean isValid=us.IsValidUser(username, oldPassword);
-                if(isValid){
-                    if(!newPassword.equals(passwordCheck)){
-                        //Password Check failed
-                        System.out.println("FAILED CHECK");
-                        session.setAttribute("PasswordCheck", "Passwords do not match!");
-                        response.sendRedirect("/Instagrim/account.jsp");
-                    }else if(!us.IsValidPassword(newPassword)){
-                        //Password Check failed
-                        session.setAttribute("newPasswordCheck", "Password must be at least 6 characters long.");
-                        response.sendRedirect("/Instagrim/account.jsp");
-                    }else{
-                        if(us.updatePassword(username, newPassword)){
-                            session.setAttribute("passwordOk", "Password updated!");
-                        }
-                        else{
-                            session.setAttribute("passwordBad", "Password update failed!");
+            if(!oldPassword.equals("")){
+                updatePassword(session,lg,us,oldPassword,newPassword,passwordCheck);
+            }
+            //Delete Account
+            if(request.getParameter("delete")!=null){
+                String deleteAccount = request.getParameter("delete");
+                if(deleteAccount.equals("yes")){
+                    if(session.getAttribute("LogedIn") != null){
+                        if(us.removeUser(username)){
+                            lg.setLogedout();
+                            session.setAttribute("LogedIn", null);
+                            RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
+                            rd.forward(request,response);
                         }
                     }
                 }
-
-                //Delete Account
-                if(request.getParameter("delete")!=null){
-                    String deleteAccount = request.getParameter("delete");
-                    if(deleteAccount.equals("yes")){
-                        if(session.getAttribute("LogedIn") != null){
-                            if(us.removeUser(username)){
-                                lg.setLogedout();
-                                session.setAttribute("LogedIn", null);
-                                RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
-                                rd.forward(request,response);
-                            }
-                        }
-                    }
-                }
+            }
 
             for (Part part : request.getParts()) {
-                System.out.println("Part Name " + part.getName());
-
                 //Profile Picture
                 if(part.getContentType() != null){
                     String type = part.getContentType();
@@ -129,9 +108,12 @@ public class Account extends HttpServlet {
                     }
                 }
             }
-        }
         RequestDispatcher rd=request.getRequestDispatcher("account.jsp");
-        rd.forward(request, response);
+        rd.forward(request, response);   
+        }else{
+            RequestDispatcher rd=request.getRequestDispatcher("login.jsp");
+            rd.forward(request, response);
+        }
     }
    
     
@@ -142,6 +124,28 @@ public class Account extends HttpServlet {
 	    rd.forward(request,response);
     }
     
+    protected void updatePassword(HttpSession session, LogedIn lg, User us, String oldPassword, String newPassword, String passwordCheck){
+        boolean isValid=us.IsValidUser(lg.getUsername(), oldPassword);
+        if(isValid){
+            if(!newPassword.equals(passwordCheck)){
+                //Password Check failed
+                System.out.println("FAILED CHECK");
+                session.setAttribute("PasswordCheck", "Passwords do not match!");
+            }else if(!us.IsValidPassword(newPassword)){
+                //Password Check failed
+                session.setAttribute("newPasswordCheck", "Password must be at least 6 characters long.");
+            }else{
+                if(us.updatePassword(lg.getUsername(), newPassword)){
+                    session.setAttribute("passwordOk", "Password updated!");
+                }
+                else{
+                    session.setAttribute("passwordBad", "Password update failed!");
+                }
+            }
+        }else{
+            session.setAttribute("passwordBad", "Your password is incorrect!");
+        }  
+    }
     
     
     /**

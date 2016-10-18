@@ -32,13 +32,14 @@
                 <td>
                     <textarea name="comments" rows = "19" cols="70" readonly> <% 
                         String commentArray[] = (String[])session.getAttribute("comments");
-                        for(int i = 0; i<commentArray.length;i++){
-                            %>
-                            <%=commentArray[i]%>
-                        <%}%>
+                        if(commentArray != null){
+                            for(int i = 0; i<commentArray.length;i+=3){
+                                %>
+                                <%=commentArray[i]%><%=commentArray[i+1]%><%=commentArray[i+2]%>
+                            <%}}%>
                     </textarea> <br>
                     <form method="POST"  action="Comment">
-                    <input type="text" name="commentInput" placeholder="type here to comment">
+                        <input type="text" name="commentInput" placeholder="type here to comment" width="20" height="10">
                     </form>
                 </td>
             </tr>
