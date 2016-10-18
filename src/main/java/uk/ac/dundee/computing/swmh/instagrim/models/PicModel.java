@@ -18,6 +18,7 @@ import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
+import static com.datastax.driver.core.TypeCodec.set;
 import com.datastax.driver.core.utils.Bytes;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -95,39 +96,42 @@ public class PicModel {
     
     public void setComment(String picid, String comment){
         Session session = cluster.connect("instagrim");
-        comment = "{" + comment + "}";
-        char[] comments = comment.toCharArray();
-        System.out.println("HERE: " + comments);
-        PreparedStatement psInsertCommentPic = session.prepare("update pics set comments = comments + ? where picid=?");
-        BoundStatement bsInsertCommentPic = new BoundStatement(psInsertCommentPic);
-        session.execute(
-                bsInsertCommentPic.bind(
-                       comments, java.util.UUID.fromString(picid)));
-    }
-    
-    public String[] getComment(String picid){
-        Session session = cluster.connect("instagrim");
         PreparedStatement ps = session.prepare("select comments from pics where picid =?");
         BoundStatement boundStatement = new BoundStatement(ps);
-        
         ResultSet rs = session.execute( // this is where the query is executed
                 boundStatement.bind( // here you are binding the 'boundStatement'
                         java.util.UUID.fromString(picid)));
-        int arrayLength = rs.getAvailableWithoutFetching();
-        String comments[] = new String[arrayLength];
-        int i = 0;
-        if (rs.isExhausted()) {
-            
-            return null;
-        } else {
-            for(Row row: rs){
-                System.out.print("FOUND:" + comments[i]);
-                comments[i] = row.toString();
-                i++;
-            }
-            return comments;
+        String comments = "";
+        for(Row row: rs){
+            if(row.getString("comments")!=null)
+                comments += row.getString("comments");
         }
-        
+        comments += comment + "~@!";
+        System.out.println("HERE2: " + comments);
+        PreparedStatement psInsertCommentPic = session.prepare("update pics set comments = ? where picid=?");
+        BoundStatement bsInsertCommentPic = new BoundStatement(psInsertCommentPic);
+        session.execute(
+                bsInsertCommentPic.bind(
+                    comments, java.util.UUID.fromString(picid)));
+    }
+    
+    public String[] getComment(String picid){
+        System.out.println("PCID : " + picid);
+        Session session = cluster.connect("instagrim");
+        PreparedStatement ps = session.prepare("select comments from pics where picid =?");
+        BoundStatement boundStatement = new BoundStatement(ps);
+        ResultSet rs = session.execute( // this is where the query is executed
+                boundStatement.bind( // here you are binding the 'boundStatement'
+                        java.util.UUID.fromString(picid)));
+        if (rs.isExhausted()) {
+            return null;
+        }else{
+            String[] comments = null;
+            for(Row row: rs){
+                comments = row.getString("comments").split("~@!");
+            }
+            return comments;  
+        }    
     }
     
 

@@ -33,7 +33,7 @@ public class Logout extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         HttpSession session=request.getSession();
@@ -41,8 +41,6 @@ public class Logout extends HttpServlet {
         if (lg != null) {
             lg.setLogedout();
             session.setAttribute("LogedIn", null);
-            
-            //response.sendRedirect("/Instagrim");
             RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
 	    rd.forward(request,response);
         }else{

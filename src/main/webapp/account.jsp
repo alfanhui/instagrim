@@ -24,12 +24,17 @@
         </header>
     <body>        
         <form method="POST" enctype="multipart/form-data" action="Account">
-            <h3>Change Profile Picture</h3> <input type="file" name="upfile"> <p>
+            <h3>Change Profile Picture</h3> <input type="file" name="upfile"><p><font color="red">${uploadBad}</font></p>
             <br>
-            <h3>Change Password:</h3>
-            <p>    Old Password:<input type="password" name="oldPassword"><br>
-            <p>    New Password:<input type="password" name="newPassword"><br>
-            <p>Confirm Password:<input type="password" name="CheckPassword"></br></p>
+            <h3>Change Password:</h3><p><font color="green">${passwordOk}</font><font color="red">${passwordBad}</font></p>
+            <p>        Old Password:<input type="password" name="oldPassword"><br></p><p><font color="red">${passwordCheck}</font></p>
+            <p>        New Password:<input type="password" name="newPassword"><br></p><p><font color="red">${newPasswordCheck}</font></p></p>
+            <p>Confirm New Password:<input type="password" name="passwordCheck"><br></p>
+            <br>
+            <h3>Delete Account</h3>
+                <input type="radio" name="delete" value="no"> No<br>
+                <input type="radio" name="delete" value="yes"> Yes<br>
+            </p>
             
             <input type="submit" value="Submit">        
         </form>

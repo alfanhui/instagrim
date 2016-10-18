@@ -30,10 +30,15 @@
             <tr>
                 <td><a href="/Instagrim/Image/${uuid}" ><img src="/Instagrim/Thumb/${uuid}"></a><td>
                 <td>
-                    <textarea name="comments" rows = "19" cols="70" readonly> ${comments} </textarea> <br>
+                    <textarea name="comments" rows = "19" cols="70" readonly> <% 
+                        String commentArray[] = (String[])session.getAttribute("comments");
+                        for(int i = 0; i<commentArray.length;i++){
+                            %>
+                            <%=commentArray[i]%>
+                        <%}%>
+                    </textarea> <br>
                     <form method="POST"  action="Comment">
                     <input type="text" name="commentInput" placeholder="type here to comment">
-                    session.setAttribute("uuid", ${uuid});
                     </form>
                 </td>
             </tr>

@@ -51,7 +51,8 @@ public class Register extends HttpServlet {
         HttpSession session=request.getSession();
         User us=new User();
         us.setCluster(cluster);
-        
+        session.setAttribute("PasswordCheck", null);
+        session.setAttribute("UsernameCheck", null);
         String username=request.getParameter("username");
         String password=request.getParameter("password");
         String passwordCheck=request.getParameter("passwordCheck");

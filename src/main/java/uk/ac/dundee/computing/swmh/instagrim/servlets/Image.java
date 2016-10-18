@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+import org.apache.commons.fileupload.FileUploadBase.InvalidContentTypeException;
 import uk.ac.dundee.computing.swmh.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.swmh.instagrim.lib.Convertors;
 import uk.ac.dundee.computing.swmh.instagrim.models.PicModel;
@@ -126,11 +127,14 @@ public class Image extends HttpServlet {
     }
     
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {       
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{       
         HttpSession session=request.getSession();
+        session.setAttribute("uploadok", null);
+        session.setAttribute("uploadbad", null);
+        
         for (Part part : request.getParts()) {
             System.out.println("Part Name " + part.getName());
-            String type = part.getContentType();
+            String type = part.getContentType();             
             String filename = part.getSubmittedFileName();
             System.out.print("TYPE" + type);
             if(type.startsWith("application/octet-stream")){
@@ -162,7 +166,6 @@ public class Image extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("upload.jsp");
                 rd.forward(request, response);
             }
-            
         }
         if(session.getAttribute("uploadbad")!= null){ //Bad file
             RequestDispatcher rd = request.getRequestDispatcher("upload.jsp");

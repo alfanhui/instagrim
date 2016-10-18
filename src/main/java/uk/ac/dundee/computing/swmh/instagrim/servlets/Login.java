@@ -44,15 +44,15 @@ public class Login extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session=request.getSession();
+        session.setAttribute("InvalidLogin", null);
         String username=request.getParameter("username");
         String password=request.getParameter("password");
         User us=new User();
         us.setCluster(cluster);
         boolean isValid=us.IsValidUser(username, password);
-        HttpSession session=request.getSession();
+        
         System.out.println("Session in servlet "+session);
         if (isValid){
             LogedIn lg= new LogedIn();
@@ -74,7 +74,7 @@ public class Login extends HttpServlet {
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException{ 
+            throws ServletException, IOException{
             RequestDispatcher rd=request.getRequestDispatcher("login.jsp");
 	    rd.forward(request,response);
     }

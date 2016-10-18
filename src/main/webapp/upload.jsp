@@ -30,10 +30,6 @@
                 <input type="file" name="upfile1"></br>
                 <input type="submit" value="UPLOAD" width="150" height="150">
             </form>
-            <%
-                session.setAttribute("uploadok", null);
-                session.setAttribute("uploadbad", null);
-            %>
             </ul>
         </article>
         <footer>

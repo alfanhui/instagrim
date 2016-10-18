@@ -22,9 +22,9 @@
                         <%}%>
                     <li><a href="/Instagrim/Upload">Upload</a></li>
                     <li><a href="/Instagrim/Images/<%=lg.getUsername()%>">Your Images</a></li>
-                    <li><a href="/Instagrim/Profile">Settings</a></li>
-                    <form method="POST"  action="Logout">
-                        <input type="submit" value="LOGOUT">     
+                    <li><a href="/Instagrim/Account">Settings</a></li>
+                    <form method="GET" action="/Instagrim/Logout">
+                        <input type="submit" value="LOGOUT"> 
                     </form>
                     <%}
             }else{%>

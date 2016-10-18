@@ -32,9 +32,6 @@
                 </ul>
                 <br/>
             </form>
-            <%
-                session.setAttribute("InvalidLogin", null);
-            %>
             <ul>
                 <p><a href="/Instagrim/Register">or Register!</a></p>
             </ul>

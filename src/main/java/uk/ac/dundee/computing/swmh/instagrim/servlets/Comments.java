@@ -42,17 +42,14 @@ public class Comments extends HttpServlet {
             HttpSession session=request.getSession();
             String uri = request.getRequestURI();
             String[] parts = uri.split("/");
-            if(parts.length != 4){
-                response.sendRedirect("/Instagrim/Login");
-            }else{
-                session.setAttribute("uuid", parts[3]);
-                PicModel tm = new PicModel();
-                tm.setCluster(cluster);
-                String commentArray[] = tm.getComment(parts[3]);
-                session.setAttribute(parts[3], commentArray);
-                RequestDispatcher rd = request.getRequestDispatcher("/comments.jsp");
-                rd.forward(request, response);
-            }
+            System.out.print("PART3: " + parts[3]);
+            session.setAttribute("uuid", parts[3]);
+            PicModel tm = new PicModel();
+            tm.setCluster(cluster);
+            String commentArray[] = tm.getComment(parts[3]);
+            session.setAttribute("comments", commentArray);
+            RequestDispatcher rd = request.getRequestDispatcher("/comments.jsp");
+            rd.forward(request, response);
             
     }
     
@@ -65,6 +62,7 @@ public class Comments extends HttpServlet {
             PicModel tm = new PicModel();
             tm.setCluster(cluster);
             tm.setComment(uuid, comment);
+            //response.sendRedirect("/Instagrim/Comments/" + uuid);
             RequestDispatcher rd = request.getRequestDispatcher("/comments.jsp");
             rd.forward(request, response);
         }
