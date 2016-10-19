@@ -8,8 +8,8 @@ package uk.ac.dundee.computing.swmh.instagrim.stores;
 
 
 /**
- *
- * @author Administrator
+ * LogedIn stores temporary values for the client after login. 
+ * @author Stuart Huddy
  */
 public class LogedIn {
     private boolean logedin=false;

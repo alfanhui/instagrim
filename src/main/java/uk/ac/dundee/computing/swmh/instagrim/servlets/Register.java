@@ -54,6 +54,7 @@ public class Register extends HttpServlet {
         session.setAttribute("PasswordCheck", null);
         session.setAttribute("UsernameCheck", null);
         String username=request.getParameter("username");
+        username= username.toLowerCase();
         String password=request.getParameter("password");
         String passwordCheck=request.getParameter("passwordCheck");
         String email=request.getParameter("email");
@@ -93,7 +94,10 @@ public class Register extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Register Sevlet: Takes information for user, "
+                + "checks to see if details are valid,"
+                + "proceeds to log user in and return to index."
+                + "If anything fails, return back to register screen with error messages.";
     }// </editor-fold>
 
 }

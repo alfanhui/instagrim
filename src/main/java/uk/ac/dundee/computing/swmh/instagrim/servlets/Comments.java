@@ -40,21 +40,21 @@ public class Comments extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException{ 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{ 
             HttpSession session=request.getSession();
             String uri = request.getRequestURI();
             String[] parts = uri.split("/");
-            session.setAttribute("uuid", parts[3]);
-            PicModel tm = new PicModel();
-            tm.setCluster(cluster);
-            String commentArray[] = tm.getComment(parts[3]);
-            session.setAttribute("comments", commentArray);
-            RequestDispatcher rd = request.getRequestDispatcher("/comments.jsp");
-            rd.forward(request, response);
-            
+            if(!parts[3].equals("comments.jsp")){
+                session.setAttribute("uuid", parts[3]);
+                PicModel tm = new PicModel();
+                tm.setCluster(cluster);
+                String commentArray[] = tm.getComment(parts[3]);
+                session.setAttribute("comments", commentArray);
+            }
+            //response.sendRedirect("comments.jsp");            
+            RequestDispatcher rd = request.getRequestDispatcher("comments.jsp");
+            rd.forward(request, response);  
     }
-    
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -72,8 +72,9 @@ public class Comments extends HttpServlet {
             String commentArray[] = tm.getComment(uuid);
             session.setAttribute("comments", commentArray);
             
-            RequestDispatcher rd = request.getRequestDispatcher("/comments.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("comments.jsp");
             rd.forward(request, response);
+            //response.sendRedirect("/Instagrim/Comments/" + uuid);
         }
 
     

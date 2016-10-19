@@ -1,7 +1,7 @@
 <%-- 
-    Document   : UsersPics
+    Document   : comments
     Created on : Sep 24, 2014, 2:52:48 PM
-    Author     : Administrator
+    Author     : Stuart Huddy
 --%>
 
 <%@page import="java.util.*"%>

@@ -9,8 +9,8 @@ import com.datastax.driver.core.utils.Bytes;
 import java.nio.ByteBuffer;
 
 /**
- *
- * @author Administrator
+ * Pic stores temporary values for each picture in the user picture lists.
+ * @author Stuart Huddy
  */
 public class Pic {
 

@@ -1,7 +1,7 @@
 <%-- 
     Document   : footer
     Created on : Oct 3, 2016, 1:22:22 AM
-    Author     : Alfanhui
+    Author     : Stuart Huddy
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

@@ -126,6 +126,8 @@ public class Image extends HttpServlet {
         out.close();
     }
     
+    
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{       
         HttpSession session=request.getSession();
@@ -185,4 +187,17 @@ public class Image extends HttpServlet {
         out.close();
         return;
     }
+    
+   /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Image Servlet: deals with all image related I/O. Indirectly speaks to the database.";
+    }// </editor-fold>
+
+    
+    
 }

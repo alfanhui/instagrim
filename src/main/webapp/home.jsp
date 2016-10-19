@@ -23,8 +23,14 @@
             <h1>I n s t a G r i m</h1>
             <h2>Your world in Black & White</h2>
         </header>
-       
-        
+        <%
+            if(session.getAttribute("homeScreen") == null){
+        %>
+        <h3>Random Pic of the Day</h3>         
+        <a href="/Instagrim/Comments/${homeScreen}" ><img src="/Instagrim/Thumb/${homeScreen}"></a> 
+        <%
+            }
+        %>
         <footer>
             <jsp:include page="footer.jsp"></jsp:include>
         </footer>

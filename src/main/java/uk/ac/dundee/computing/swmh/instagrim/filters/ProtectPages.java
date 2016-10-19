@@ -102,6 +102,7 @@ public class ProtectPages implements Filter {
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
@@ -126,12 +127,11 @@ public class ProtectPages implements Filter {
         Throwable problem = null;
         try {
             chain.doFilter(request, response);
-        } catch (Throwable t) {
+        } catch (IOException | ServletException t) {
 	    // If an exception is thrown somewhere down the filter chain,
             // we still want to execute our after processing, and then
             // rethrow the problem after that.
             problem = t;
-            t.printStackTrace();
         }
         
         doAfterProcessing(request, response);
@@ -151,6 +151,7 @@ public class ProtectPages implements Filter {
 
     /**
      * Return the filter configuration object for this filter.
+     * @return 
      */
     public FilterConfig getFilterConfig() {
         return (this.filterConfig);
@@ -168,13 +169,17 @@ public class ProtectPages implements Filter {
     /**
      * Destroy method for this filter
      */
+    @Override
     public void destroy() {        
     }
 
     /**
      * Init method for this filter
+     * @param filterConfig
+     * @throws javax.servlet.ServletException
      */
-    public void init(FilterConfig filterConfig) {        
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException{        
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {                
@@ -191,7 +196,7 @@ public class ProtectPages implements Filter {
         if (filterConfig == null) {
             return ("ProtectPages()");
         }
-        StringBuffer sb = new StringBuffer("ProtectPages(");
+        StringBuilder sb = new StringBuilder("ProtectPages(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());

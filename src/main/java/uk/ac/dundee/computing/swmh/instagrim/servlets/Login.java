@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import uk.ac.dundee.computing.swmh.instagrim.lib.CassandraHosts;
+import uk.ac.dundee.computing.swmh.instagrim.models.PicModel;
 import uk.ac.dundee.computing.swmh.instagrim.models.User;
 import uk.ac.dundee.computing.swmh.instagrim.stores.LogedIn;
 
@@ -48,6 +49,7 @@ public class Login extends HttpServlet {
         HttpSession session=request.getSession();
         session.setAttribute("InvalidLogin", null);
         String username=request.getParameter("username");
+        username= username.toLowerCase();
         String password=request.getParameter("password");
         User us=new User();
         us.setCluster(cluster);
@@ -62,8 +64,12 @@ public class Login extends HttpServlet {
             lg.setProfileUUID(us.getProfileUUID(username));
             session.setAttribute("LogedIn", lg);
             System.out.println("Session in servlet "+session);
-            RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
+            PicModel tm = new PicModel();
+            tm.setCluster(cluster);
+            session.setAttribute("homeScreen", tm.getRandomPic()); //Random Home screen picture - should be server variable
+            RequestDispatcher rd=request.getRequestDispatcher("home.jsp");
 	    rd.forward(request,response);
+           
             
         }else{
             session.setAttribute("InvalidLogin", "Invalid Username or Password");
@@ -88,7 +94,9 @@ public class Login extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Login Servlet: Takes username & password, "
+                + "checks if valid, and sets login values. "
+                + "Returns user to index or login(if details are invalid";
     }// </editor-fold>
 
 }

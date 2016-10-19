@@ -1,7 +1,7 @@
 <%-- 
-    Document   : register.jsp
+    Document   : register
     Created on : Sep 28, 2014, 6:29:51 PM
-    Author     : Administrator
+    Author     : Stuart Huddy
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

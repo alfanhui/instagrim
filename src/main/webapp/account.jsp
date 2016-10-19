@@ -1,7 +1,7 @@
 <%-- 
-    Document   : index
+    Document   : account
     Created on : Sep 28, 2014, 7:01:44 PM
-    Author     : Administrator
+    Author     : Stuart Huddy
 --%>
 
 

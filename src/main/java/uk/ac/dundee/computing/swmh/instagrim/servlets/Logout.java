@@ -59,7 +59,7 @@ public class Logout extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Logout Servlet: Sets login attributes to null, returns user to index";
     }// </editor-fold>
 
 }

@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
 import static org.imgscalr.Scalr.*;
@@ -207,6 +208,27 @@ public class PicModel {
         return Pics;
     }
 
+    public String getRandomPic(){
+        Session session = cluster.connect("instagrim");
+        Random rand = new Random();
+        PreparedStatement ps = session.prepare("select picid from pics");
+        BoundStatement boundStatement = new BoundStatement(ps);
+        ResultSet rs = session.execute(boundStatement);
+        if (rs.isExhausted()) {
+            return null;
+        }else{
+            int  n = rand.nextInt(10) + 1;
+            java.util.UUID uuid = null;
+            for(Row row: rs){
+                uuid = row.getUUID("picid");
+                if(n == 1)
+                    break;
+            }
+            return uuid.toString();
+        }
+    }
+    
+    
     public Pic getPic(int image_type, java.util.UUID picid) {
         Session session = cluster.connect("instagrim");
         ByteBuffer bImage = null;
